@@ -3,10 +3,24 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from 'src/models';
 import * as argon from 'argon2'
 import { PrismaClientKnownRequestError } from 'generated/prisma/runtime/library';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-    constructor(private prisma: PrismaService) { }
+    constructor(
+        private prisma: PrismaService,
+        private jwt: JwtService,
+        private config: ConfigService
+    ) { }
+    async home(){
+        const user = await this.prisma.user.findFirst({
+            where:{
+                email: "anhdo12345@gmail.com"
+            },
+        });
+        return user;
+    }
     async signin(dto: AuthDto) {
         //find user by email
         const user = await this.prisma.user.findFirst({
@@ -26,7 +40,7 @@ export class AuthService {
         }
 
         //send back user
-        return user;
+        return this.signToken(user.id, user.email);
     }
     async signup(dto: AuthDto) {
         // create hash
@@ -45,7 +59,7 @@ export class AuthService {
                 }
             });
             //return data
-            return user;
+            return this.signToken(user.id, user.email);
         }
         catch(err){
             //nếu lỗi của prisma
@@ -56,6 +70,24 @@ export class AuthService {
                 }
             }
             throw err;
+        }
+    }
+    async signToken(userId: number, email: string){
+        //create payload contain data to put in JWT
+        const payload = {
+            sub: userId,
+            email
+        }
+        // secret key from env
+        const secret = this.config.get('SECRET_KEY');
+        // make jwt depend on payload, put expiresIn and secret
+        const token = await this.jwt.signAsync(payload,{
+            expiresIn: '15m',
+            secret: secret
+        })
+        return {
+            access_token: token,
+
         }
     }
 }

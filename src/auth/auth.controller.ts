@@ -8,7 +8,7 @@ export class AuthController {
 
     @Get('home')
     home(){
-        return 'THis is homePage';
+        return this.authService.home();
     }
 
     @Post('signup')
