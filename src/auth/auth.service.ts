@@ -81,10 +81,7 @@ export class AuthService {
         // secret key from env
         const secret = this.config.get('SECRET_KEY');
         // make jwt depend on payload, put expiresIn and secret
-        const token = await this.jwt.signAsync(payload,{
-            expiresIn: '15m',
-            secret: secret
-        })
+        const token = await this.jwt.signAsync(payload)
         return {
             access_token: token,
 
