@@ -1,0 +1,60 @@
+query {
+  users {
+    id
+    email,
+    password,
+    firstName
+    lastName
+  }
+}
+
+query {
+  userItem(id: 3) {
+    id
+    email
+    firstName
+    lastName
+  }
+}
+
+mutation {
+  addUser(
+    data: {
+      email: "testuser@example.com",
+      password: "password123",
+      firstName: "Test",
+      lastName: "User"
+    }
+  ) {
+    id
+    email
+    firstName
+    lastName
+  }
+}
+
+mutation {
+  editUser(
+    id: 3, # Thay thế 1 bằng ID của người dùng bạn muốn chỉnh sửa
+    data: {
+      email: "newemail@example.com",
+      password: "newpassword123",
+      firstName: "Updated",
+      lastName: "User"
+    }
+  ) {
+    id
+    email
+    firstName
+    lastName
+  }
+}
+
+mutation {
+  deleteUser(id: 3) { # Thay thế 1 bằng ID của người dùng bạn muốn xóa
+    id
+    email
+    firstName
+    lastName
+  }
+}

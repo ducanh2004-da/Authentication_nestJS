@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/decorator/getUser.decorator';
 import { User } from '@prisma/client';
 import { UserService } from './user.service';
-import { UserDto } from 'src/models';
+import { UserDto } from '../models/user.dto';
 
 @Controller('user')
 export class UserController {
