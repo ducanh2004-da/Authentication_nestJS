@@ -10,8 +10,14 @@ type UserResponse {
   lastName: String
 }
 
+type UsersPagination {
+  totalUser: Int!
+  totalPage: Int!
+  items: [UserResponse!]
+}
+
 type Query {
-  users: [UserResponse!]!
+  users: UsersPagination!
   userItem(id: Float!): UserResponse
 }
 
@@ -19,6 +25,7 @@ type Mutation {
   addUser(data: CreateUserInput!): UserResponse!
   editUser(id: Float!, data: CreateUserInput!): UserResponse!
   deleteUser(id: Float!): UserResponse!
+  search(email: String!): UsersPagination!
 }
 
 input CreateUserInput {

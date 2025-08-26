@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { AppModule } from "../src/app.module";
 import * as pactum from 'pactum';
 import { PrismaService } from "../src/prisma/prisma.service";
-import { AuthDto } from "src/models";
+import { AuthDto } from "../src/models/auth.dto";
 
 jest.setTimeout(30000); // tăng timeout cả file lên 30s
 

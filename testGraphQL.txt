@@ -1,10 +1,13 @@
 query {
   users {
-    id
-    email,
-    password,
-    firstName
-    lastName
+    totalUser
+    totalPage
+    items {
+      id
+      email
+      firstName
+      lastName
+    }
   }
 }
 
@@ -58,3 +61,17 @@ mutation {
     lastName
   }
 }
+
+mutation {
+  search(email: "testuser") {
+    totalUser
+    totalPage
+    items {
+      id
+      email
+      firstName
+      lastName
+    }
+  }
+}
+
